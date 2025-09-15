@@ -55,6 +55,7 @@ export function useIdCard() {
       department: '',
       address: '',
       academicYear: '',
+      photo: undefined,
     });
   }, []);
 
