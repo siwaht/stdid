@@ -29,6 +29,12 @@ export interface CardDesign {
 }
 
 export const colorThemes = {
+  default: {
+    name: 'Default (No Theme)',
+    primary: 'hsl(222, 2%, 30%)',
+    accent: 'hsl(222, 2%, 50%)',
+    gradient: 'linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%)',
+  },
   ocean: {
     name: 'Ocean Blue',
     primary: 'hsl(200, 100%, 45%)',
@@ -88,9 +94,9 @@ export const cardTemplates: CardTemplate[] = [
     icon: '🎓',
     fields: [
       { key: 'universityName', label: 'University/School Name', placeholder: 'Enter institution name', required: true, maxLength: 100 },
-      { key: 'studentName', label: 'Student Name', placeholder: 'Enter full name', required: true, maxLength: 50 },
+      { key: 'studentName', label: 'Full Name', placeholder: 'Enter your full name', required: true, maxLength: 50 },
       { key: 'studentId', label: 'Student ID', placeholder: 'Enter student ID', required: true, maxLength: 20 },
-      { key: 'dateOfBirth', label: 'Date of Birth', placeholder: 'MM/DD/YYYY', required: true, type: 'date' },
+      { key: 'academicYear', label: 'Academic Year', placeholder: '2024-2025', required: true, maxLength: 20 },
       { key: 'course', label: 'Course/Program', placeholder: 'Enter course name', required: true, maxLength: 50 },
       { key: 'year', label: 'Year/Grade', placeholder: 'Enter year or grade', required: true, maxLength: 20 },
       { key: 'validUntil', label: 'Valid Until', placeholder: 'MM/YYYY', required: true },

@@ -8,7 +8,7 @@ export interface TemplateCardData {
 export function useCardTemplate() {
   const [selectedTemplate, setSelectedTemplate] = useState<CardTemplate>(cardTemplates[0]);
   const [cardData, setCardData] = useState<TemplateCardData>({});
-  const [selectedTheme, setSelectedTheme] = useState(cardTemplates[0].design.theme);
+  const [selectedTheme, setSelectedTheme] = useState('default');
   const [photo, setPhoto] = useState<string | undefined>();
 
   // Initialize card data when template changes
@@ -18,7 +18,7 @@ export function useCardTemplate() {
       initialData[field.key] = '';
     });
     setCardData(initialData);
-    setSelectedTheme(selectedTemplate.design.theme);
+    // Don't change theme when switching templates - keep user's selected theme
   }, [selectedTemplate]);
 
   const selectTemplate = useCallback((templateId: string) => {

@@ -5,7 +5,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useIdCard } from '@/hooks/use-id-card';
 import { useToast } from '@/hooks/use-toast';
-import { Edit3, Eye, Download, RotateCcw, Upload, Trash2 } from 'lucide-react';
+import { Edit3, Eye, Download, RotateCcw, Upload, Trash2, Home } from 'lucide-react';
+import { Link } from 'wouter';
 
 export default function IdCardGenerator() {
   const { cardData, validationErrors, updateField, setPhoto, removePhoto, resetForm, validateAllFields, isValid } = useIdCard();
@@ -96,6 +97,16 @@ export default function IdCardGenerator() {
 
   return (
     <div className="min-h-screen bg-background p-4 lg:p-8" data-testid="id-card-generator">
+      {/* Navigation Bar */}
+      <div className="mb-4">
+        <Link href="/">
+          <Button variant="ghost" size="sm">
+            <Home className="w-4 h-4 mr-2" />
+            Back to Home
+          </Button>
+        </Link>
+      </div>
+      
       <div className="mx-auto max-w-7xl">
         {/* Header Section */}
         <div className="text-center mb-8">

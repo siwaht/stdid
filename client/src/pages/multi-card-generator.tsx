@@ -10,9 +10,10 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
-import { Download, RotateCcw, Upload, Trash2, QrCode, Save, Wand2, Sparkles, CheckCircle, AlertCircle } from 'lucide-react';
+import { Download, RotateCcw, Upload, Trash2, QrCode, Save, Wand2, Sparkles, CheckCircle, AlertCircle, Home } from 'lucide-react';
 import QRCode from 'qrcode';
 import { generateEnhancedDummyData, validateCompliance } from '@/lib/dummy-data-generator';
+import { Link } from 'wouter';
 
 export default function MultiCardGenerator() {
   const {
@@ -309,6 +310,16 @@ export default function MultiCardGenerator() {
 
   return (
     <div className="min-h-screen bg-background p-4 lg:p-8">
+      {/* Navigation Bar */}
+      <div className="mb-4">
+        <Link href="/">
+          <Button variant="ghost" size="sm">
+            <Home className="w-4 h-4 mr-2" />
+            Back to Home
+          </Button>
+        </Link>
+      </div>
+      
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <div className="text-center mb-8">
