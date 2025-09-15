@@ -112,13 +112,14 @@
 /* ID Card Specific Styles */
 .id-card-container {
   width: 3.375in;
-  height: 2.125in;
+  min-height: 2.125in;
+  height: auto;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
   background-color: white;
   border-radius: 8px;
-  overflow: hidden;
+  overflow: visible;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 

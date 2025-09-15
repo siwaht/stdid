@@ -13,6 +13,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Download, RotateCcw, Upload, Trash2, QrCode, Save, Wand2, Sparkles, CheckCircle, AlertCircle, Home } from 'lucide-react';
 import QRCode from 'qrcode';
 import { generateEnhancedDummyData, validateCompliance } from '@/lib/dummy-data-generator';
+import { generateSignature } from '@/lib/logo-signature-generator';
 import { Link } from 'wouter';
 
 export default function MultiCardGenerator() {
@@ -36,7 +37,9 @@ export default function MultiCardGenerator() {
   const [qrCodeData, setQrCodeData] = useState<string>('');
   const [complianceStatus, setComplianceStatus] = useState<{ isValid: boolean; errors: string[] }>({ isValid: false, errors: [] });
   const [organizationLogo, setOrganizationLogo] = useState<{ svg: string; backgroundColor: string } | null>(null);
+  const [uploadedLogo, setUploadedLogo] = useState<string | null>(null);
   const [userSignature, setUserSignature] = useState<{ svg: string } | null>(null);
+  const [uploadedSignature, setUploadedSignature] = useState<string | null>(null);
 
   // Check compliance whenever data changes
   useCallback(() => {
@@ -126,13 +129,45 @@ export default function MultiCardGenerator() {
       resetCard();
       setQrCodeData('');
       setOrganizationLogo(null);
+      setUploadedLogo(null);
       setUserSignature(null);
+      setUploadedSignature(null);
       toast({
         title: "Form reset",
         description: "All fields have been cleared",
       });
     }
   }, [resetCard, toast]);
+
+  // Handle logo upload
+  const handleLogoUpload = useCallback((file: File) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const result = e.target?.result as string;
+      setUploadedLogo(result);
+      setOrganizationLogo(null); // Clear generated logo when uploading custom
+      toast({
+        title: "Logo uploaded",
+        description: "Your custom logo has been added",
+      });
+    };
+    reader.readAsDataURL(file);
+  }, [toast]);
+
+  // Handle signature upload
+  const handleSignatureUpload = useCallback((file: File) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const result = e.target?.result as string;
+      setUploadedSignature(result);
+      setUserSignature(null); // Clear generated signature when uploading custom
+      toast({
+        title: "Signature uploaded",
+        description: "Your custom signature has been added",
+      });
+    };
+    reader.readAsDataURL(file);
+  }, [toast]);
 
   const downloadAsImage = useCallback(async (format: 'png' | 'pdf') => {
     if (!cardRef.current) return;
@@ -230,8 +265,14 @@ export default function MultiCardGenerator() {
             {/* Header with logo and title */}
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2">
-                {/* Organization Logo */}
-                {organizationLogo ? (
+                {/* Organization Logo - Display uploaded or generated */}
+                {uploadedLogo ? (
+                  <img 
+                    src={uploadedLogo}
+                    className="w-10 h-10 rounded-md object-contain"
+                    alt="Organization Logo"
+                  />
+                ) : organizationLogo ? (
                   <div 
                     className="w-10 h-10 rounded-md overflow-hidden flex-shrink-0"
                     style={{ backgroundColor: organizationLogo.backgroundColor }}
@@ -288,13 +329,21 @@ export default function MultiCardGenerator() {
                     </div>
                   ))}
                 </div>
-                {/* Signature */}
-                {userSignature && (
+                {/* Signature - Display uploaded or generated */}
+                {(uploadedSignature || userSignature) && (
                   <div className="w-16 h-8 mr-2">
-                    <div 
-                      className="w-full h-full"
-                      dangerouslySetInnerHTML={{ __html: userSignature.svg }}
-                    />
+                    {uploadedSignature ? (
+                      <img 
+                        src={uploadedSignature}
+                        className="w-full h-full object-contain"
+                        alt="Signature"
+                      />
+                    ) : (
+                      <div 
+                        className="w-full h-full"
+                        dangerouslySetInnerHTML={{ __html: userSignature?.svg || '' }}
+                      />
+                    )}
                     <p className="text-[5px] text-gray-500 text-center border-t border-gray-300 mt-0.5">
                       Signature
                     </p>
@@ -353,6 +402,118 @@ export default function MultiCardGenerator() {
               </TabsContent>
 
               <TabsContent value="details" className="space-y-6 mt-6">
+                {/* Logo and Signature Upload Section */}
+                <div className="space-y-4">
+                  <h3 className="text-sm font-semibold">Logo & Signature</h3>
+                  <div className="grid grid-cols-2 gap-4">
+                    {/* Logo Options */}
+                    <div className="space-y-2">
+                      <Label className="text-xs">Organization Logo</Label>
+                      <div className="flex gap-2">
+                        <FileUpload onFileSelect={handleLogoUpload}>
+                          <Button variant="outline" size="sm" className="w-full" type="button">
+                            <Upload className="w-3 h-3 mr-1" />
+                            Upload Logo
+                          </Button>
+                        </FileUpload>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            if (selectedTemplate) {
+                              const enhanced = generateEnhancedDummyData(selectedTemplate);
+                              if (enhanced.logo) {
+                                setOrganizationLogo(enhanced.logo);
+                                setUploadedLogo(null);
+                                toast({ title: "Logo generated", description: "Random logo created" });
+                              }
+                            }
+                          }}
+                          type="button"
+                        >
+                          <Sparkles className="w-3 h-3 mr-1" />
+                          Generate
+                        </Button>
+                      </div>
+                      {(uploadedLogo || organizationLogo) && (
+                        <div className="flex items-center gap-2">
+                          {uploadedLogo ? (
+                            <img src={uploadedLogo} className="w-12 h-12 object-contain rounded" alt="Logo" />
+                          ) : organizationLogo ? (
+                            <div
+                              className="w-12 h-12 rounded"
+                              style={{ backgroundColor: organizationLogo.backgroundColor }}
+                              dangerouslySetInnerHTML={{ __html: organizationLogo.svg }}
+                            />
+                          ) : null}
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => {
+                              setUploadedLogo(null);
+                              setOrganizationLogo(null);
+                            }}
+                          >
+                            <Trash2 className="w-3 h-3" />
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Signature Options */}
+                    <div className="space-y-2">
+                      <Label className="text-xs">Signature</Label>
+                      <div className="flex gap-2">
+                        <FileUpload onFileSelect={handleSignatureUpload}>
+                          <Button variant="outline" size="sm" className="w-full" type="button">
+                            <Upload className="w-3 h-3 mr-1" />
+                            Upload Sign
+                          </Button>
+                        </FileUpload>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            const name = cardData[selectedTemplate.fields.find(f => 
+                              ['studentName', 'memberName', 'employeeName', 'visitorName'].includes(f.key)
+                            )?.key || ''] || 'John Doe';
+                            const sig = generateSignature(name);
+                            setUserSignature(sig);
+                            setUploadedSignature(null);
+                            toast({ title: "Signature generated", description: "Random signature created" });
+                          }}
+                          type="button"
+                        >
+                          <Sparkles className="w-3 h-3 mr-1" />
+                          Generate
+                        </Button>
+                      </div>
+                      {(uploadedSignature || userSignature) && (
+                        <div className="flex items-center gap-2">
+                          {uploadedSignature ? (
+                            <img src={uploadedSignature} className="h-8 object-contain" alt="Signature" />
+                          ) : userSignature ? (
+                            <div
+                              className="h-8 w-20"
+                              dangerouslySetInnerHTML={{ __html: userSignature.svg }}
+                            />
+                          ) : null}
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => {
+                              setUploadedSignature(null);
+                              setUserSignature(null);
+                            }}
+                          >
+                            <Trash2 className="w-3 h-3" />
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
                 {/* Compliance Status */}
                 <div className={`p-4 rounded-lg border ${complianceStatus.isValid ? 'bg-green-50 border-green-200' : 'bg-yellow-50 border-yellow-200'}`}>
                   <div className="flex items-center gap-2">
