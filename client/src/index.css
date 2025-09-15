@@ -212,14 +212,14 @@
 /* Mobile Responsive ID Card */
 @media (max-width: 768px) {
   .id-card-container {
-    transform: scale(0.8);
-    transform-origin: center;
+    transform: scale(0.8) !important;
+    transform-origin: center !important;
   }
 }
 
 @media (max-width: 640px) {
   .id-card-container {
-    transform: scale(0.6);
-    transform-origin: center;
+    transform: scale(0.6) !important;
+    transform-origin: center !important;
   }
 }
