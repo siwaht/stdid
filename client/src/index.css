@@ -1,0 +1,225 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(210, 40%, 98%);
+  --foreground: hsl(215, 28%, 17%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(215, 28%, 17%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(215, 28%, 17%);
+  --primary: hsl(231, 48%, 48%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(210, 40%, 96%);
+  --secondary-foreground: hsl(215, 16%, 47%);
+  --muted: hsl(210, 40%, 96%);
+  --muted-foreground: hsl(215, 16%, 47%);
+  --accent: hsl(20, 90%, 55%);
+  --accent-foreground: hsl(0, 0%, 100%);
+  --destructive: hsl(0, 84%, 60%);
+  --destructive-foreground: hsl(0, 0%, 100%);
+  --border: hsl(214, 32%, 91%);
+  --input: hsl(214, 32%, 91%);
+  --ring: hsl(231, 48%, 48%);
+  --chart-1: hsl(203.8863, 88.2845%, 53.1373%);
+  --chart-2: hsl(159.7826, 100%, 36.0784%);
+  --chart-3: hsl(42.0290, 92.8251%, 56.2745%);
+  --chart-4: hsl(147.1429, 78.5047%, 41.9608%);
+  --chart-5: hsl(341.4894, 75.2000%, 50.9804%);
+  --sidebar: hsl(180, 6.6667%, 97.0588%);
+  --sidebar-foreground: hsl(210, 25%, 7.8431%);
+  --sidebar-primary: hsl(203.8863, 88.2845%, 53.1373%);
+  --sidebar-primary-foreground: hsl(0, 0%, 100%);
+  --sidebar-accent: hsl(211.5789, 51.3514%, 92.7451%);
+  --sidebar-accent-foreground: hsl(203.8863, 88.2845%, 53.1373%);
+  --sidebar-border: hsl(205.0000, 25.0000%, 90.5882%);
+  --sidebar-ring: hsl(202.8169, 89.1213%, 53.1373%);
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: Menlo, monospace;
+  --radius: 0.5rem;
+  --shadow-2xs: 0px 2px 0px 0px hsl(202.8169, 89.1213%, 53.1373%, 0.00);
+  --shadow-xs: 0px 2px 0px 0px hsl(202.8169, 89.1213%, 53.1373%, 0.00);
+  --shadow-sm: 0px 2px 0px 0px hsl(202.8169, 89.1213%, 53.1373%, 0.00), 0px 1px 2px -1px hsl(202.8169, 89.1213%, 53.1373%, 0.00);
+  --shadow: 0px 2px 0px 0px hsl(202.8169, 89.1213%, 53.1373%, 0.00), 0px 1px 2px -1px hsl(202.8169, 89.1213%, 53.1373%, 0.00);
+  --shadow-md: 0px 2px 0px 0px hsl(202.8169, 89.1213%, 53.1373%, 0.00), 0px 2px 4px -1px hsl(202.8169, 89.1213%, 53.1373%, 0.00);
+  --shadow-lg: 0px 2px 0px 0px hsl(202.8169, 89.1213%, 53.1373%, 0.00), 0px 4px 6px -1px hsl(202.8169, 89.1213%, 53.1373%, 0.00);
+  --shadow-xl: 0px 2px 0px 0px hsl(202.8169, 89.1213%, 53.1373%, 0.00), 0px 8px 10px -1px hsl(202.8169, 89.1213%, 53.1373%, 0.00);
+  --shadow-2xl: 0px 2px 0px 0px hsl(202.8169, 89.1213%, 53.1373%, 0.00);
+  --tracking-normal: 0em;
+  --spacing: 0.25rem;
+}
+
+.dark {
+  --background: hsl(0, 0%, 0%);
+  --foreground: hsl(200, 6.6667%, 91.1765%);
+  --card: hsl(228, 9.8039%, 10%);
+  --card-foreground: hsl(0, 0%, 85.0980%);
+  --popover: hsl(0, 0%, 0%);
+  --popover-foreground: hsl(200, 6.6667%, 91.1765%);
+  --primary: hsl(203.7736, 87.6033%, 52.5490%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(195.0000, 15.3846%, 94.9020%);
+  --secondary-foreground: hsl(210, 25%, 7.8431%);
+  --muted: hsl(0, 0%, 9.4118%);
+  --muted-foreground: hsl(210, 3.3898%, 46.2745%);
+  --accent: hsl(205.7143, 70%, 7.8431%);
+  --accent-foreground: hsl(203.7736, 87.6033%, 52.5490%);
+  --destructive: hsl(356.3033, 90.5579%, 54.3137%);
+  --destructive-foreground: hsl(0, 0%, 100%);
+  --border: hsl(210, 5.2632%, 14.9020%);
+  --input: hsl(207.6923, 27.6596%, 18.4314%);
+  --ring: hsl(202.8169, 89.1213%, 53.1373%);
+  --chart-1: hsl(203.8863, 88.2845%, 53.1373%);
+  --chart-2: hsl(159.7826, 100%, 36.0784%);
+  --chart-3: hsl(42.0290, 92.8251%, 56.2745%);
+  --chart-4: hsl(147.1429, 78.5047%, 41.9608%);
+  --chart-5: hsl(341.4894, 75.2000%, 50.9804%);
+  --sidebar: hsl(228, 9.8039%, 10%);
+  --sidebar-foreground: hsl(0, 0%, 85.0980%);
+  --sidebar-primary: hsl(202.8169, 89.1213%, 53.1373%);
+  --sidebar-primary-foreground: hsl(0, 0%, 100%);
+  --sidebar-accent: hsl(205.7143, 70%, 7.8431%);
+  --sidebar-accent-foreground: hsl(203.7736, 87.6033%, 52.5490%);
+  --sidebar-border: hsl(205.7143, 15.7895%, 26.0784%);
+  --sidebar-ring: hsl(202.8169, 89.1213%, 53.1373%);
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: Menlo, monospace;
+  --radius: 0.5rem;
+  --shadow-2xs: 0px 2px 0px 0px hsl(202.8169, 89.1213%, 53.1373%, 0.00);
+  --shadow-xs: 0px 2px 0px 0px hsl(202.8169, 89.1213%, 53.1373%, 0.00);
+  --shadow-sm: 0px 2px 0px 0px hsl(202.8169, 89.1213%, 53.1373%, 0.00), 0px 1px 2px -1px hsl(202.8169, 89.1213%, 53.1373%, 0.00);
+  --shadow: 0px 2px 0px 0px hsl(202.8169, 89.1213%, 53.1373%, 0.00), 0px 1px 2px -1px hsl(202.8169, 89.1213%, 53.1373%, 0.00);
+  --shadow-md: 0px 2px 0px 0px hsl(202.8169, 89.1213%, 53.1373%, 0.00), 0px 2px 4px -1px hsl(202.8169, 89.1213%, 53.1373%, 0.00);
+  --shadow-lg: 0px 2px 0px 0px hsl(202.8169, 89.1213%, 53.1373%, 0.00), 0px 4px 6px -1px hsl(202.8169, 89.1213%, 53.1373%, 0.00);
+  --shadow-xl: 0px 2px 0px 0px hsl(202.8169, 89.1213%, 53.1373%, 0.00), 0px 8px 10px -1px hsl(202.8169, 89.1213%, 53.1373%, 0.00);
+  --shadow-2xl: 0px 2px 0px 0px hsl(202.8169, 89.1213%, 53.1373%, 0.00);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+}
+
+/* ID Card Specific Styles */
+.id-card-container {
+  width: 3.375in;
+  height: 2.125in;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.photo-section {
+  width: 35%;
+  height: 100%;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, hsl(var(--muted)) 0%, hsl(var(--secondary)) 100%);
+}
+
+.photo-section img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.info-section {
+  width: 65%;
+  padding: 0.15in;
+  display: flex;
+  flex-direction: column;
+  background: white;
+}
+
+/* Modern 3D Button Styling */
+.modern-button {
+  background-color: transparent;
+  color: hsl(var(--primary));
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.15s ease-out;
+  border: 2px solid hsl(var(--primary));
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px hsl(231, 48%, 42%);
+  position: relative;
+  top: 0;
+  gap: 0.5rem;
+}
+
+.modern-button:hover {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  top: 2px;
+  box-shadow: 0 2px hsl(231, 48%, 42%);
+}
+
+.modern-button:active {
+  top: 4px;
+  box-shadow: 0 0 hsl(231, 48%, 42%);
+}
+
+/* Drag and Drop Styles */
+.drag-drop-area {
+  border: 2px dashed hsl(var(--border));
+  border-radius: var(--radius);
+  background: hsl(var(--muted));
+  transition: all 0.3s ease;
+}
+
+.drag-drop-area.drag-over {
+  border-color: hsl(var(--primary));
+  background: hsl(231, 48%, 96%);
+}
+
+.drag-drop-area:hover {
+  border-color: hsl(var(--primary));
+  background: hsl(231, 48%, 98%);
+}
+
+/* Form field focus styles */
+.form-input {
+  transition: all 0.2s ease;
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--card));
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: hsl(var(--ring));
+  box-shadow: 0 0 0 3px hsl(var(--ring) / 0.1);
+}
+
+/* Mobile Responsive ID Card */
+@media (max-width: 768px) {
+  .id-card-container {
+    transform: scale(0.8);
+    transform-origin: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .id-card-container {
+    transform: scale(0.6);
+    transform-origin: center;
+  }
+}
