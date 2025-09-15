@@ -447,114 +447,113 @@ export default function MultiCardGenerator() {
                 {/* Logo and Signature Upload Section */}
                 <div className="space-y-4">
                   <h3 className="text-sm font-semibold">Logo & Signature</h3>
-                  <div className="grid grid-cols-2 gap-4">
-                    {/* Logo Options */}
-                    <div className="space-y-2">
-                      <Label className="text-xs">Organization Logo</Label>
-                      <div className="grid grid-cols-2 gap-2">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => {
-                            if (selectedTemplate) {
-                              const enhanced = generateEnhancedDummyData(selectedTemplate);
-                              if (enhanced.logo) {
-                                setOrganizationLogo(enhanced.logo);
-                                setUploadedLogo(null);
-                                toast({ title: "Logo generated", description: "Random logo created" });
-                              }
-                            }
-                          }}
-                          type="button"
-                          className="w-full"
-                        >
-                          <Sparkles className="w-3 h-3 mr-1" />
-                          Generate
-                        </Button>
-                        <FileUpload onFileSelect={handleLogoUpload}>
-                          <Button variant="outline" size="sm" className="w-full" type="button">
-                            <Upload className="w-3 h-3 mr-1" />
-                            Upload Logo
-                          </Button>
-                        </FileUpload>
-                      </div>
-                      {(uploadedLogo || organizationLogo) && (
-                        <div className="flex items-center gap-2">
-                          {uploadedLogo ? (
-                            <img src={uploadedLogo} className="w-12 h-12 object-contain rounded" alt="Logo" />
-                          ) : organizationLogo ? (
-                            <div
-                              className="w-12 h-12 rounded"
-                              style={{ backgroundColor: organizationLogo.backgroundColor }}
-                              dangerouslySetInnerHTML={{ __html: organizationLogo.svg }}
-                            />
-                          ) : null}
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => {
+                  
+                  {/* Logo Options */}
+                  <div className="space-y-2">
+                    <Label className="text-xs">Organization Logo</Label>
+                    <div className="flex gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          if (selectedTemplate) {
+                            const enhanced = generateEnhancedDummyData(selectedTemplate);
+                            if (enhanced.logo) {
+                              setOrganizationLogo(enhanced.logo);
                               setUploadedLogo(null);
-                              setOrganizationLogo(null);
-                            }}
-                          >
-                            <Trash2 className="w-3 h-3" />
-                          </Button>
-                        </div>
-                      )}
+                              toast({ title: "Logo generated", description: "Random logo created" });
+                            }
+                          }
+                        }}
+                        type="button"
+                        className="flex-1"
+                      >
+                        <Sparkles className="w-3 h-3 mr-1" />
+                        Generate
+                      </Button>
+                      <FileUpload onFileSelect={handleLogoUpload}>
+                        <Button variant="outline" size="sm" className="flex-1" type="button">
+                          <Upload className="w-3 h-3 mr-1" />
+                          Upload Logo
+                        </Button>
+                      </FileUpload>
                     </div>
-
-                    {/* Signature Options */}
-                    <div className="space-y-2">
-                      <Label className="text-xs">Signature</Label>
-                      <div className="grid grid-cols-2 gap-2">
+                    {(uploadedLogo || organizationLogo) && (
+                      <div className="flex items-center gap-2">
+                        {uploadedLogo ? (
+                          <img src={uploadedLogo} className="w-12 h-12 object-contain rounded" alt="Logo" />
+                        ) : organizationLogo ? (
+                          <div
+                            className="w-12 h-12 rounded"
+                            style={{ backgroundColor: organizationLogo.backgroundColor }}
+                            dangerouslySetInnerHTML={{ __html: organizationLogo.svg }}
+                          />
+                        ) : null}
                         <Button
-                          variant="outline"
+                          variant="ghost"
                           size="sm"
                           onClick={() => {
-                            const name = cardData[selectedTemplate.fields.find(f => 
-                              ['studentName', 'memberName', 'employeeName', 'visitorName'].includes(f.key)
-                            )?.key || ''] || 'John Doe';
-                            const sig = generateSignature(name);
-                            setUserSignature(sig);
-                            setUploadedSignature(null);
-                            toast({ title: "Signature generated", description: "Random signature created" });
+                            setUploadedLogo(null);
+                            setOrganizationLogo(null);
                           }}
-                          type="button"
-                          className="w-full"
                         >
-                          <Sparkles className="w-3 h-3 mr-1" />
-                          Generate
+                          <Trash2 className="w-3 h-3" />
                         </Button>
-                        <FileUpload onFileSelect={handleSignatureUpload}>
-                          <Button variant="outline" size="sm" className="w-full" type="button">
-                            <Upload className="w-3 h-3 mr-1" />
-                            Upload Signature
-                          </Button>
-                        </FileUpload>
                       </div>
-                      {(uploadedSignature || userSignature) && (
-                        <div className="flex items-center gap-2">
-                          {uploadedSignature ? (
-                            <img src={uploadedSignature} className="h-8 object-contain" alt="Signature" />
-                          ) : userSignature ? (
-                            <div
-                              className="h-8 w-20"
-                              dangerouslySetInnerHTML={{ __html: userSignature.svg }}
-                            />
-                          ) : null}
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => {
-                              setUploadedSignature(null);
-                              setUserSignature(null);
-                            }}
-                          >
-                            <Trash2 className="w-3 h-3" />
-                          </Button>
-                        </div>
-                      )}
+                    )}
+                  </div>
+
+                  {/* Signature Options */}
+                  <div className="space-y-2">
+                    <Label className="text-xs">Signature</Label>
+                    <div className="flex gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          const name = cardData[selectedTemplate.fields.find(f => 
+                            ['studentName', 'memberName', 'employeeName', 'visitorName'].includes(f.key)
+                          )?.key || ''] || 'John Doe';
+                          const sig = generateSignature(name);
+                          setUserSignature(sig);
+                          setUploadedSignature(null);
+                          toast({ title: "Signature generated", description: "Random signature created" });
+                        }}
+                        type="button"
+                        className="flex-1"
+                      >
+                        <Sparkles className="w-3 h-3 mr-1" />
+                        Generate
+                      </Button>
+                      <FileUpload onFileSelect={handleSignatureUpload}>
+                        <Button variant="outline" size="sm" className="flex-1" type="button">
+                          <Upload className="w-3 h-3 mr-1" />
+                          Upload Signature
+                        </Button>
+                      </FileUpload>
                     </div>
+                    {(uploadedSignature || userSignature) && (
+                      <div className="flex items-center gap-2">
+                        {uploadedSignature ? (
+                          <img src={uploadedSignature} className="h-8 object-contain" alt="Signature" />
+                        ) : userSignature ? (
+                          <div
+                            className="h-8 w-20"
+                            dangerouslySetInnerHTML={{ __html: userSignature.svg }}
+                          />
+                        ) : null}
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => {
+                            setUploadedSignature(null);
+                            setUserSignature(null);
+                          }}
+                        >
+                          <Trash2 className="w-3 h-3" />
+                        </Button>
+                      </div>
+                    )}
                   </div>
                 </div>
 
