@@ -12,7 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import { Download, RotateCcw, Upload, Trash2, QrCode, Save, Wand2, Sparkles, CheckCircle, AlertCircle } from 'lucide-react';
 import QRCode from 'qrcode';
-import { generateDummyData, validateCompliance } from '@/lib/dummy-data-generator';
+import { generateEnhancedDummyData, validateCompliance } from '@/lib/dummy-data-generator';
 
 export default function MultiCardGenerator() {
   const {
@@ -34,6 +34,8 @@ export default function MultiCardGenerator() {
   const [showQR, setShowQR] = useState(true);
   const [qrCodeData, setQrCodeData] = useState<string>('');
   const [complianceStatus, setComplianceStatus] = useState<{ isValid: boolean; errors: string[] }>({ isValid: false, errors: [] });
+  const [organizationLogo, setOrganizationLogo] = useState<{ svg: string; backgroundColor: string } | null>(null);
+  const [userSignature, setUserSignature] = useState<{ svg: string } | null>(null);
 
   // Check compliance whenever data changes
   useCallback(() => {
@@ -43,14 +45,26 @@ export default function MultiCardGenerator() {
 
   // Generate dummy data
   const handleGenerateDummy = useCallback(() => {
-    const dummyData = generateDummyData(selectedTemplate);
-    Object.entries(dummyData).forEach(([key, value]) => {
+    const enhancedData = generateEnhancedDummyData(selectedTemplate);
+    
+    // Set form fields
+    Object.entries(enhancedData.data).forEach(([key, value]) => {
       updateField(key, value);
     });
     
+    // Set logo if generated
+    if (enhancedData.logo) {
+      setOrganizationLogo(enhancedData.logo);
+    }
+    
+    // Set signature if generated
+    if (enhancedData.signature) {
+      setUserSignature(enhancedData.signature);
+    }
+    
     toast({
       title: "Sample data generated",
-      description: "Form filled with realistic test data that meets compliance requirements",
+      description: "Form filled with realistic test data, logo, and signature",
     });
   }, [selectedTemplate, updateField, toast]);
 
@@ -110,6 +124,8 @@ export default function MultiCardGenerator() {
     if (window.confirm('Are you sure you want to reset all fields?')) {
       resetCard();
       setQrCodeData('');
+      setOrganizationLogo(null);
+      setUserSignature(null);
       toast({
         title: "Form reset",
         description: "All fields have been cleared",
@@ -210,10 +226,19 @@ export default function MultiCardGenerator() {
 
           {/* Info section */}
           <div className="w-[65%] p-3 bg-white/95 backdrop-blur-sm flex flex-col">
-            {/* Header with icon and title */}
+            {/* Header with logo and title */}
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2">
-                <span className="text-2xl">{selectedTemplate.icon}</span>
+                {/* Organization Logo */}
+                {organizationLogo ? (
+                  <div 
+                    className="w-10 h-10 rounded-md overflow-hidden flex-shrink-0"
+                    style={{ backgroundColor: organizationLogo.backgroundColor }}
+                    dangerouslySetInnerHTML={{ __html: organizationLogo.svg }}
+                  />
+                ) : (
+                  <span className="text-2xl">{selectedTemplate.icon}</span>
+                )}
                 <div>
                   <p className="text-[8px] font-semibold text-gray-600 uppercase tracking-wider">
                     {cardData[selectedTemplate.fields[0]?.key] || 'Organization Name'}
@@ -247,19 +272,33 @@ export default function MultiCardGenerator() {
               ))}
             </div>
 
-            {/* Footer with additional fields */}
+            {/* Footer with additional fields and signature */}
             <div className="mt-auto pt-2 border-t border-gray-200">
-              <div className="grid grid-cols-2 gap-x-3 text-[6px]">
-                {selectedTemplate.fields.slice(5, 7).map((field) => (
-                  <div key={field.key}>
-                    <p className="text-gray-500 font-semibold uppercase tracking-wider">
-                      {field.label}
-                    </p>
-                    <p className="text-[7px] font-medium text-gray-800">
-                      {cardData[field.key] || 'Not specified'}
+              <div className="flex items-end justify-between">
+                <div className="grid grid-cols-2 gap-x-3 text-[6px] flex-1">
+                  {selectedTemplate.fields.slice(5, 7).map((field) => (
+                    <div key={field.key}>
+                      <p className="text-gray-500 font-semibold uppercase tracking-wider">
+                        {field.label}
+                      </p>
+                      <p className="text-[7px] font-medium text-gray-800">
+                        {cardData[field.key] || 'Not specified'}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+                {/* Signature */}
+                {userSignature && (
+                  <div className="w-16 h-8 mr-2">
+                    <div 
+                      className="w-full h-full"
+                      dangerouslySetInnerHTML={{ __html: userSignature.svg }}
+                    />
+                    <p className="text-[5px] text-gray-500 text-center border-t border-gray-300 mt-0.5">
+                      Signature
                     </p>
                   </div>
-                ))}
+                )}
               </div>
             </div>
           </div>

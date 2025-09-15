@@ -1,5 +1,6 @@
 // Dummy data generator for testing ID cards with compliance requirements
 import { CardTemplate } from './card-templates';
+import { generateOrganizationLogo, generateSignature } from './logo-signature-generator';
 
 // Lists of realistic data
 const firstNames = [
@@ -184,6 +185,18 @@ function getCurrentAcademicYear(): string {
   }
 }
 
+// Enhanced dummy data with logos and signatures
+export interface EnhancedDummyData {
+  data: Record<string, string>;
+  logo?: {
+    svg: string;
+    backgroundColor: string;
+  };
+  signature?: {
+    svg: string;
+  };
+}
+
 // Main generator function
 export function generateDummyData(template: CardTemplate): Record<string, string> {
   const data: Record<string, string> = {};
@@ -326,6 +339,44 @@ export function generateDummyData(template: CardTemplate): Record<string, string
   });
   
   return data;
+}
+
+// Enhanced generator with logos and signatures
+export function generateEnhancedDummyData(template: CardTemplate): EnhancedDummyData {
+  const basicData = generateDummyData(template);
+  const result: EnhancedDummyData = { data: basicData };
+  
+  // Extract name for signature
+  const nameFields = ['studentName', 'memberName', 'employeeName', 'visitorName'];
+  let fullName = '';
+  for (const field of nameFields) {
+    if (basicData[field]) {
+      fullName = basicData[field];
+      break;
+    }
+  }
+  
+  // Extract organization for logo
+  const orgFields = ['universityName', 'organizationName', 'libraryName', 'clubName', 'insurerName'];
+  let orgName = '';
+  for (const field of orgFields) {
+    if (basicData[field]) {
+      orgName = basicData[field];
+      break;
+    }
+  }
+  
+  // Generate logo if organization exists
+  if (orgName) {
+    result.logo = generateOrganizationLogo(orgName);
+  }
+  
+  // Generate signature if name exists
+  if (fullName) {
+    result.signature = generateSignature(fullName);
+  }
+  
+  return result;
 }
 
 // Validate if data meets compliance requirements
