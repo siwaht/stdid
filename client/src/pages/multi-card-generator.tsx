@@ -451,13 +451,7 @@ export default function MultiCardGenerator() {
                     {/* Logo Options */}
                     <div className="space-y-2">
                       <Label className="text-xs">Organization Logo</Label>
-                      <div className="flex gap-2">
-                        <FileUpload onFileSelect={handleLogoUpload}>
-                          <Button variant="outline" size="sm" className="w-full" type="button">
-                            <Upload className="w-3 h-3 mr-1" />
-                            Upload Logo
-                          </Button>
-                        </FileUpload>
+                      <div className="grid grid-cols-2 gap-2">
                         <Button
                           variant="outline"
                           size="sm"
@@ -472,10 +466,17 @@ export default function MultiCardGenerator() {
                             }
                           }}
                           type="button"
+                          className="w-full"
                         >
                           <Sparkles className="w-3 h-3 mr-1" />
                           Generate
                         </Button>
+                        <FileUpload onFileSelect={handleLogoUpload}>
+                          <Button variant="outline" size="sm" className="w-full" type="button">
+                            <Upload className="w-3 h-3 mr-1" />
+                            Upload Logo
+                          </Button>
+                        </FileUpload>
                       </div>
                       {(uploadedLogo || organizationLogo) && (
                         <div className="flex items-center gap-2">
@@ -505,13 +506,7 @@ export default function MultiCardGenerator() {
                     {/* Signature Options */}
                     <div className="space-y-2">
                       <Label className="text-xs">Signature</Label>
-                      <div className="flex gap-2">
-                        <FileUpload onFileSelect={handleSignatureUpload}>
-                          <Button variant="outline" size="sm" className="w-full" type="button">
-                            <Upload className="w-3 h-3 mr-1" />
-                            Upload Sign
-                          </Button>
-                        </FileUpload>
+                      <div className="grid grid-cols-2 gap-2">
                         <Button
                           variant="outline"
                           size="sm"
@@ -525,10 +520,17 @@ export default function MultiCardGenerator() {
                             toast({ title: "Signature generated", description: "Random signature created" });
                           }}
                           type="button"
+                          className="w-full"
                         >
                           <Sparkles className="w-3 h-3 mr-1" />
                           Generate
                         </Button>
+                        <FileUpload onFileSelect={handleSignatureUpload}>
+                          <Button variant="outline" size="sm" className="w-full" type="button">
+                            <Upload className="w-3 h-3 mr-1" />
+                            Upload Signature
+                          </Button>
+                        </FileUpload>
                       </div>
                       {(uploadedSignature || userSignature) && (
                         <div className="flex items-center gap-2">
