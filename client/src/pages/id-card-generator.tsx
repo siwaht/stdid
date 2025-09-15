@@ -8,7 +8,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Edit3, Eye, Download, RotateCcw, Upload, Trash2 } from 'lucide-react';
 
 export default function IdCardGenerator() {
-  const { cardData, updateField, setPhoto, removePhoto, resetForm } = useIdCard();
+  const { cardData, validationErrors, updateField, setPhoto, removePhoto, resetForm, validateAllFields, isValid } = useIdCard();
   const { toast } = useToast();
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -168,9 +168,14 @@ export default function IdCardGenerator() {
                     value={cardData.universityName}
                     onChange={(e) => updateField('universityName', e.target.value)}
                     placeholder="Enter university name"
-                    className="form-input"
+                    className={`form-input ${validationErrors.universityName ? 'border-destructive' : ''}`}
                     data-testid="input-university"
                   />
+                  {validationErrors.universityName && (
+                    <p className="text-destructive text-sm mt-1" data-testid="error-university">
+                      {validationErrors.universityName}
+                    </p>
+                  )}
                 </div>
                 
                 <div>
@@ -180,9 +185,14 @@ export default function IdCardGenerator() {
                     value={cardData.studentName}
                     onChange={(e) => updateField('studentName', e.target.value)}
                     placeholder="Enter student name"
-                    className="form-input"
+                    className={`form-input ${validationErrors.studentName ? 'border-destructive' : ''}`}
                     data-testid="input-name"
                   />
+                  {validationErrors.studentName && (
+                    <p className="text-destructive text-sm mt-1" data-testid="error-name">
+                      {validationErrors.studentName}
+                    </p>
+                  )}
                 </div>
                 
                 <div>
@@ -192,9 +202,14 @@ export default function IdCardGenerator() {
                     value={cardData.studentId}
                     onChange={(e) => updateField('studentId', e.target.value)}
                     placeholder="Enter student ID"
-                    className="form-input"
+                    className={`form-input ${validationErrors.studentId ? 'border-destructive' : ''}`}
                     data-testid="input-student-id"
                   />
+                  {validationErrors.studentId && (
+                    <p className="text-destructive text-sm mt-1" data-testid="error-student-id">
+                      {validationErrors.studentId}
+                    </p>
+                  )}
                 </div>
                 
                 <div>
@@ -204,9 +219,14 @@ export default function IdCardGenerator() {
                     value={cardData.dateOfBirth}
                     onChange={(e) => updateField('dateOfBirth', e.target.value)}
                     placeholder="Enter date of birth"
-                    className="form-input"
+                    className={`form-input ${validationErrors.dateOfBirth ? 'border-destructive' : ''}`}
                     data-testid="input-dob"
                   />
+                  {validationErrors.dateOfBirth && (
+                    <p className="text-destructive text-sm mt-1" data-testid="error-dob">
+                      {validationErrors.dateOfBirth}
+                    </p>
+                  )}
                 </div>
                 
                 <div>
@@ -216,9 +236,14 @@ export default function IdCardGenerator() {
                     value={cardData.phone}
                     onChange={(e) => updateField('phone', e.target.value)}
                     placeholder="Enter phone number"
-                    className="form-input"
+                    className={`form-input ${validationErrors.phone ? 'border-destructive' : ''}`}
                     data-testid="input-phone"
                   />
+                  {validationErrors.phone && (
+                    <p className="text-destructive text-sm mt-1" data-testid="error-phone">
+                      {validationErrors.phone}
+                    </p>
+                  )}
                 </div>
                 
                 <div>
@@ -228,9 +253,14 @@ export default function IdCardGenerator() {
                     value={cardData.academicYear}
                     onChange={(e) => updateField('academicYear', e.target.value)}
                     placeholder="Enter academic year"
-                    className="form-input"
+                    className={`form-input ${validationErrors.academicYear ? 'border-destructive' : ''}`}
                     data-testid="input-academic-year"
                   />
+                  {validationErrors.academicYear && (
+                    <p className="text-destructive text-sm mt-1" data-testid="error-academic-year">
+                      {validationErrors.academicYear}
+                    </p>
+                  )}
                 </div>
                 
                 <div>
@@ -240,9 +270,14 @@ export default function IdCardGenerator() {
                     value={cardData.department}
                     onChange={(e) => updateField('department', e.target.value)}
                     placeholder="Enter department"
-                    className="form-input"
+                    className={`form-input ${validationErrors.department ? 'border-destructive' : ''}`}
                     data-testid="input-department"
                   />
+                  {validationErrors.department && (
+                    <p className="text-destructive text-sm mt-1" data-testid="error-department">
+                      {validationErrors.department}
+                    </p>
+                  )}
                 </div>
                 
                 <div className="md:col-span-2">
@@ -252,9 +287,14 @@ export default function IdCardGenerator() {
                     value={cardData.address}
                     onChange={(e) => updateField('address', e.target.value)}
                     placeholder="Enter address"
-                    className="form-input"
+                    className={`form-input ${validationErrors.address ? 'border-destructive' : ''}`}
                     data-testid="input-address"
                   />
+                  {validationErrors.address && (
+                    <p className="text-destructive text-sm mt-1" data-testid="error-address">
+                      {validationErrors.address}
+                    </p>
+                  )}
                 </div>
               </div>
 
