@@ -324,7 +324,7 @@ export default function MultiCardGenerator() {
                   <span className="text-2xl">{selectedTemplate.icon}</span>
                 )}
                 <div>
-                  <p className="text-[8px] font-semibold text-gray-600 uppercase tracking-wider">
+                  <p className="text-[8px] font-semibold text-muted-foreground uppercase tracking-wider">
                     {cardData[selectedTemplate.fields[0]?.key] || 'Organization Name'}
                   </p>
                   <p className="text-[11px] font-bold" style={{ color: currentTheme.primary }}>
@@ -346,10 +346,10 @@ export default function MultiCardGenerator() {
             <div className="flex-1 space-y-1">
               {selectedTemplate.fields.slice(1, 5).map((field) => (
                 <div key={field.key} className="text-[7px]">
-                  <p className="text-gray-500 font-semibold uppercase tracking-wider">
+                  <p className="text-muted-foreground font-semibold uppercase tracking-wider">
                     {field.label}
                   </p>
-                  <p className="text-[9px] font-medium text-gray-800">
+                  <p className="text-[9px] font-medium text-foreground">
                     {cardData[field.key] || `Enter ${field.label.toLowerCase()}`}
                   </p>
                 </div>
@@ -357,15 +357,15 @@ export default function MultiCardGenerator() {
             </div>
 
             {/* Footer with additional fields and signature */}
-            <div className="mt-auto pt-2 border-t border-gray-200">
+            <div className="mt-auto pt-2 border-t border-border">
               <div className="flex items-end justify-between">
                 <div className="grid grid-cols-2 gap-x-3 text-[6px] flex-1">
                   {selectedTemplate.fields.slice(5, 7).map((field) => (
                     <div key={field.key}>
-                      <p className="text-gray-500 font-semibold uppercase tracking-wider">
+                      <p className="text-muted-foreground font-semibold uppercase tracking-wider">
                         {field.label}
                       </p>
-                      <p className="text-[7px] font-medium text-gray-800">
+                      <p className="text-[7px] font-medium text-foreground">
                         {cardData[field.key] || 'Not specified'}
                       </p>
                     </div>
@@ -373,20 +373,22 @@ export default function MultiCardGenerator() {
                 </div>
                 {/* Signature - Display uploaded or generated */}
                 {(uploadedSignature || userSignature) && (
-                  <div className="w-16 h-8 mr-2">
-                    {uploadedSignature ? (
-                      <img 
-                        src={uploadedSignature}
-                        className="w-full h-full object-contain"
-                        alt="Signature"
-                      />
-                    ) : (
-                      <div 
-                        className="w-full h-full"
-                        dangerouslySetInnerHTML={{ __html: userSignature?.svg || '' }}
-                      />
-                    )}
-                    <p className="text-[5px] text-gray-500 text-center border-t border-gray-300 mt-0.5">
+                  <div className="w-20 h-10 mr-2 flex flex-col">
+                    <div className="flex-1">
+                      {uploadedSignature ? (
+                        <img 
+                          src={uploadedSignature}
+                          className="w-full h-full object-contain"
+                          alt="Signature"
+                        />
+                      ) : (
+                        <div 
+                          className="w-full h-full"
+                          dangerouslySetInnerHTML={{ __html: userSignature?.svg || '' }}
+                        />
+                      )}
+                    </div>
+                    <p className="text-[5px] text-muted-foreground text-center pt-0.5">
                       Signature
                     </p>
                   </div>
