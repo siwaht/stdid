@@ -343,7 +343,7 @@ export default function MultiCardGenerator() {
             </div>
 
             {/* Dynamic fields based on template */}
-            <div className="flex-1 space-y-1">
+            <div className="flex-1 space-y-1 pb-2">
               {selectedTemplate.fields.slice(1, 5).map((field) => (
                 <div key={field.key} className="text-[7px]">
                   <p className="text-muted-foreground font-semibold uppercase tracking-wider">
@@ -357,7 +357,7 @@ export default function MultiCardGenerator() {
             </div>
 
             {/* Footer with additional fields and signature */}
-            <div className="mt-auto pt-2 border-t border-border">
+            <div className="mt-auto pt-1 border-t border-border">
               <div className="flex items-end justify-between">
                 <div className="grid grid-cols-2 gap-x-3 text-[6px] flex-1">
                   {selectedTemplate.fields.slice(5, 7).map((field) => (
@@ -373,8 +373,8 @@ export default function MultiCardGenerator() {
                 </div>
                 {/* Signature - Display uploaded or generated */}
                 {(uploadedSignature || userSignature) && (
-                  <div className="w-20 h-10 mr-2 flex flex-col">
-                    <div className="flex-1">
+                  <div className="w-20 h-12 mr-2 flex flex-col">
+                    <div className="flex-1 overflow-hidden">
                       {uploadedSignature ? (
                         <img 
                           src={uploadedSignature}
@@ -388,7 +388,7 @@ export default function MultiCardGenerator() {
                         />
                       )}
                     </div>
-                    <p className="text-[5px] text-muted-foreground text-center pt-0.5">
+                    <p className="text-[6px] text-muted-foreground text-center mt-0.5">
                       Signature
                     </p>
                   </div>
